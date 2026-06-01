@@ -14,7 +14,7 @@
   --accent:#4ade80;--accent-dim:#22c55e22;--accent-hover:#22c55e;
   --bubble-me:#1e3a2a;--bubble-them:#1c1f22;
   --text-primary:#e8eaed;--text-secondary:#8b949e;--text-muted:#484f58;
-  --online:#4ade80;--danger:#f87171;--warn:#fbbf24;
+  --online:#4ade80;--danger:#f87171;--warn:#fbbf24;--info:#60a5fa;
   --r-sm:6px;--r-md:12px;--r-lg:18px;--r-xl:22px;
   --shadow:0 8px 32px #00000066;
 }
@@ -32,15 +32,19 @@ html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text
 .brand-name{font-size:16px;font-weight:600;letter-spacing:-.3px}
 .brand-name span{color:var(--accent)}
 .brand-actions{display:flex;gap:4px;margin-left:auto}
-.icon-btn{width:32px;height:32px;border-radius:var(--r-sm);border:none;background:transparent;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s,color .12s;flex-shrink:0}
+.icon-btn{width:32px;height:32px;border-radius:var(--r-sm);border:none;background:transparent;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s,color .12s;flex-shrink:0;position:relative}
 .icon-btn:hover{background:var(--bg-hover);color:var(--text-primary)}
 .icon-btn svg{width:17px;height:17px}
+.icon-btn .notif-badge{position:absolute;top:3px;right:3px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid var(--bg-surface)}
 .search-wrap{position:relative}
 .search-wrap .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-muted);pointer-events:none}
 .search-input{width:100%;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--r-md);color:var(--text-primary);font-family:inherit;font-size:13px;padding:8px 12px 8px 32px;outline:none;transition:border-color .15s}
 .search-input::placeholder{color:var(--text-muted)}
 .search-input:focus{border-color:var(--accent)}
-.section-label{font-size:10.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);padding:12px 16px 5px}
+.sb-tabs{display:flex;padding:6px 12px 0;gap:4px}
+.sb-tab{flex:1;padding:6px;border-radius:var(--r-sm);border:none;background:transparent;font-family:inherit;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .12s}
+.sb-tab.active{background:var(--bg-raised);color:var(--text-primary)}
+.section-label{font-size:10.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);padding:10px 16px 4px}
 .chat-list{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .chat-list::-webkit-scrollbar{width:3px}
 .chat-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
@@ -51,6 +55,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text
 .chat-av{position:relative;flex-shrink:0}
 .av-circle{width:42px;height:42px;border-radius:50%;background:var(--bg-raised);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:19px;overflow:hidden;user-select:none;flex-shrink:0}
 .av-circle img{width:100%;height:100%;object-fit:cover}
+.av-circle.group{border-radius:12px}
 .online-dot{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--online);border:2px solid var(--bg-surface)}
 .chat-info{flex:1;min-width:0}
 .chat-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
@@ -66,6 +71,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text
 .my-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .my-status-text{font-size:11px;color:var(--accent)}
 .empty-sidebar{padding:32px 16px;text-align:center;color:var(--text-muted);font-size:13px;line-height:1.6}
+
+/* ═══ REQUEST ITEMS ════════════════════════ */
+.req-item{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg-surface)}
+.req-item:not(:last-child){border-bottom:1px solid var(--border)}
+.req-actions{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
+.req-accept{padding:4px 10px;border-radius:var(--r-sm);border:none;background:var(--accent);color:#0d0f11;font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s}
+.req-accept:hover{background:var(--accent-hover)}
+.req-decline{padding:4px 10px;border-radius:var(--r-sm);border:1px solid var(--border);background:transparent;color:var(--text-muted);font-size:11.5px;cursor:pointer;font-family:inherit;transition:all .12s}
+.req-decline:hover{background:var(--bg-hover);color:var(--danger);border-color:var(--danger)}
 
 /* ═══ MAIN ════════════════════════════════ */
 .main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;background:var(--bg-deep)}
@@ -94,8 +108,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text
 .msg-deleted{font-style:italic;color:var(--text-muted);font-size:12.5px}
 .msg-meta{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:3px}
 .msg-time{font-size:10px;color:var(--text-muted);font-family:'DM Mono',monospace}
+.msg-sender-name{font-size:10.5px;color:var(--accent);font-weight:600;margin-bottom:3px}
 .tick{width:13px;height:13px;color:var(--text-muted)}
-.tick.read{color:var(--accent)}
 .msg-del-btn{opacity:0;position:absolute;top:-8px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px 8px;font-size:11px;color:var(--danger);cursor:pointer;transition:opacity .15s;white-space:nowrap;z-index:10;font-family:inherit}
 .msg-row.me .msg-del-btn{right:4px}
 .msg-row.them .msg-del-btn{left:4px}
@@ -104,6 +118,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text
 .msg-file svg{width:16px;height:16px;flex-shrink:0;color:var(--accent)}
 .msg-file-name{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}
 .msg-img{max-width:220px;border-radius:var(--r-md);margin-top:4px;cursor:pointer;display:block}
+.msg-gif{max-width:240px;border-radius:var(--r-md);margin-top:4px;cursor:pointer;display:block}
 .typing-row{display:flex;align-items:flex-end;margin-top:8px}
 .typing-bubble{background:var(--bubble-them);border:1px solid var(--border);border-radius:var(--r-xl) var(--r-xl) var(--r-xl) 4px;padding:11px 14px;display:flex;gap:4px;align-items:center}
 .t-dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:bounce 1.3s infinite ease-in-out}
@@ -121,23 +136,47 @@ html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text
 .msg-input{flex:1;background:transparent;border:none;outline:none;color:var(--text-primary);font-family:inherit;font-size:13.5px;line-height:1.5;resize:none;max-height:110px;padding:8px 6px 8px 0;scrollbar-width:none}
 .msg-input::-webkit-scrollbar{display:none}
 .msg-input::placeholder{color:var(--text-muted)}
-.emoji-btn,.attach-inner-btn{width:30px;height:30px;border-radius:50%;border:none;background:transparent;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .12s;flex-shrink:0;margin-bottom:4px}
-.emoji-btn:hover,.attach-inner-btn:hover{color:var(--text-primary)}
-.emoji-btn svg,.attach-inner-btn svg{width:18px;height:18px}
+.input-icon-btn{width:30px;height:30px;border-radius:50%;border:none;background:transparent;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .12s;flex-shrink:0;margin-bottom:4px}
+.input-icon-btn:hover{color:var(--text-primary)}
+.input-icon-btn svg{width:18px;height:18px}
 .send-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--accent);color:#0d0f11;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s,transform .1s;flex-shrink:0}
 .send-btn:hover{background:var(--accent-hover);transform:scale(1.06)}
 .send-btn:active{transform:scale(.94)}
 .send-btn svg{width:17px;height:17px}
 #fileInput{display:none}
 
-/* ═══ EMOJI PICKER ════════════════════════ */
-.emoji-picker{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--r-md);padding:10px;width:280px;box-shadow:var(--shadow);z-index:100;display:none}
-.emoji-picker.open{display:block}
-.ep-search{width:100%;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text-primary);font-family:inherit;font-size:12.5px;padding:6px 10px;outline:none;margin-bottom:8px}
+/* ═══ EMOJI PICKER (extended) ════════════ */
+.emoji-picker{position:absolute;bottom:calc(100% + 8px);right:0;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--r-md);padding:0;width:340px;box-shadow:var(--shadow);z-index:100;display:none;overflow:hidden}
+.emoji-picker.open{display:flex;flex-direction:column}
+.ep-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg-surface)}
+.ep-tab{flex:1;padding:9px 4px;font-size:11px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .12s;position:relative}
+.ep-tab.active{color:var(--text-primary)}
+.ep-tab.active::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:var(--accent);border-radius:2px 2px 0 0}
+.ep-search{width:100%;background:var(--bg-surface);border:none;border-bottom:1px solid var(--border);color:var(--text-primary);font-family:inherit;font-size:12.5px;padding:8px 12px;outline:none}
 .ep-search::placeholder{color:var(--text-muted)}
-.ep-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-height:180px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.ep-cats{display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.ep-cats::-webkit-scrollbar{display:none}
+.ep-cat{width:28px;height:28px;border-radius:var(--r-sm);border:none;background:transparent;font-size:16px;cursor:pointer;transition:background .1s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ep-cat:hover,.ep-cat.active{background:var(--bg-hover)}
+.ep-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:1px;max-height:200px;overflow-y:auto;padding:6px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.ep-grid::-webkit-scrollbar{width:3px}
 .ep-emoji{font-size:20px;cursor:pointer;padding:4px;border-radius:4px;text-align:center;transition:background .1s;line-height:1.3}
 .ep-emoji:hover{background:var(--bg-hover)}
+
+/* ═══ GIF PICKER ══════════════════════════ */
+.gif-picker{position:absolute;bottom:calc(100% + 8px);right:40px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--r-md);width:340px;height:340px;box-shadow:var(--shadow);z-index:100;display:none;flex-direction:column;overflow:hidden}
+.gif-picker.open{display:flex}
+.gif-search-row{display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid var(--border)}
+.gif-search{flex:1;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text-primary);font-family:inherit;font-size:12.5px;padding:7px 10px;outline:none;transition:border-color .15s}
+.gif-search:focus{border-color:var(--accent)}
+.gif-grid{flex:1;overflow-y:auto;padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;align-content:start}
+.gif-grid::-webkit-scrollbar{width:3px}
+.gif-item{border-radius:var(--r-sm);overflow:hidden;cursor:pointer;background:var(--bg-surface);aspect-ratio:16/9;transition:transform .1s,opacity .1s}
+.gif-item:hover{transform:scale(1.03)}
+.gif-item img{width:100%;height:100%;object-fit:cover;display:block}
+.gif-loading{display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:12px;grid-column:1/-1;padding:20px}
+.gif-no-key{grid-column:1/-1;padding:16px;text-align:center;color:var(--text-muted);font-size:12px;line-height:1.6}
+.gif-no-key a{color:var(--accent);text-decoration:none}
 
 /* ═══ MODALS ══════════════════════════════ */
 .overlay{position:fixed;inset:0;background:#00000088;backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center}
@@ -187,12 +226,28 @@ textarea.field-input{resize:vertical;min-height:70px}
 .dd-item svg{width:15px;height:15px;flex-shrink:0}
 .dd-sep{height:1px;background:var(--border);margin:4px 0}
 
+/* ═══ AUTH SCREEN ══════════════════════════ */
 #authScreen{position:fixed;inset:0;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;z-index:300}
 .auth-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);width:360px;max-width:calc(100vw - 32px);padding:32px 28px;box-shadow:var(--shadow)}
 .auth-brand{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px}
 .auth-tabs{display:flex;background:var(--bg-raised);border-radius:var(--r-sm);padding:3px;margin-bottom:20px;gap:3px}
 .auth-tab{flex:1;padding:7px;border-radius:4px;border:none;background:transparent;font-family:inherit;font-size:13px;color:var(--text-secondary);cursor:pointer;transition:background .12s,color .12s}
 .auth-tab.active{background:var(--bg-active);color:var(--text-primary);font-weight:500}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-divider span{font-size:11px;color:var(--text-muted)}
+.google-btn{width:100%;padding:10px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg-raised);color:var(--text-primary);font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .12s}
+.google-btn:hover{background:var(--bg-hover)}
+.google-btn svg{width:18px;height:18px}
+
+/* ═══ GROUP LOGO PICKER ═══════════════════ */
+.logo-picker-row{display:flex;gap:8px;margin-bottom:14px;align-items:center}
+.logo-preview-lg{width:52px;height:52px;border-radius:14px;background:var(--bg-raised);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex-shrink:0}
+.logo-preview-lg img{width:100%;height:100%;object-fit:cover}
+.logo-emoji-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;max-height:100px;overflow-y:auto}
+.logo-emoji-opt{font-size:22px;cursor:pointer;padding:4px;border-radius:6px;transition:background .1s;border:2px solid transparent}
+.logo-emoji-opt:hover{background:var(--bg-hover)}
+.logo-emoji-opt.selected{border-color:var(--accent)}
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 18px;font-size:13px;box-shadow:var(--shadow);z-index:500;animation:toastIn .2s ease-out;white-space:nowrap}
 @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
@@ -209,13 +264,19 @@ textarea.field-input{resize:vertical;min-height:70px}
 .drop-zone{position:absolute;inset:0;background:#0d0f11cc;border:2px dashed var(--accent);border-radius:var(--r-lg);display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;z-index:50;pointer-events:none}
 .drop-zone.active{display:flex}
 .drop-zone svg{width:40px;height:40px;color:var(--accent);opacity:.6}
-.drop-zone p{color:var(--text-secondary);font-size:14px}
 
 @keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .msg-row{animation:msgIn .16s ease-out}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ═══ MEMBER LIST ════════════════════════ */
+.member-list{display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;margin-top:10px}
+.member-item{display:flex;align-items:center;gap:9px;padding:6px 10px;border-radius:var(--r-sm);background:var(--bg-raised);border:1px solid var(--border)}
+.member-item .m-name{font-size:13px;font-weight:500}
+.member-item .m-user{font-size:11px;color:var(--text-muted)}
+.member-item .m-badge{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--accent-dim);color:var(--accent);margin-left:auto;font-weight:600}
 </style>
 </head>
 <body>
@@ -236,6 +297,13 @@ textarea.field-input{resize:vertical;min-height:70px}
       <div class="field-group"><label class="field-label">Password</label><input class="field-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
       <div class="msg-error" id="loginErr"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Sign in</button>
+      <div id="googleAuthSection" style="display:none">
+        <div class="auth-divider"><span>or</span></div>
+        <a href="/auth/google" class="google-btn">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </a>
+      </div>
     </div>
     <div id="formRegister" style="display:none">
       <div class="field-group"><label class="field-label">Display Name</label><input class="field-input" id="regName" placeholder="Your Name"/></div>
@@ -244,6 +312,13 @@ textarea.field-input{resize:vertical;min-height:70px}
       <div class="field-group"><label class="field-label">Password</label><input class="field-input" id="regPass" type="password" placeholder="Min. 6 characters" autocomplete="new-password"/></div>
       <div class="msg-error" id="regErr"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doRegister()">Create account</button>
+      <div id="googleRegSection" style="display:none">
+        <div class="auth-divider"><span>or</span></div>
+        <a href="/auth/google" class="google-btn">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Sign up with Google
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -256,23 +331,29 @@ textarea.field-input{resize:vertical;min-height:70px}
         <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
         <span class="brand-name">Rune<span>Chat</span></span>
         <div class="brand-actions">
+          <button class="icon-btn" title="Friend requests" id="reqBtn" onclick="toggleRequestsPanel()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          </button>
           <button class="icon-btn" title="New chat" id="newChatBtn" onclick="openModal('newChatModal')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
-          <button class="icon-btn" title="More options" id="sideMenuBtn" onclick="toggleDropdown('sideDropdown','sideMenuBtn')">
+          <button class="icon-btn" title="More" id="sideMenuBtn" onclick="toggleDropdown('sideDropdown','sideMenuBtn')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
           </button>
         </div>
       </div>
       <div class="search-wrap">
         <svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="search-input" id="sideSearch" placeholder="Search contacts…" oninput="filterContacts(this.value)"/>
+        <input class="search-input" id="sideSearch" placeholder="Search contacts & groups…" oninput="filterContacts(this.value)"/>
       </div>
     </div>
-    <div class="section-label">Conversations</div>
-    <div class="chat-list" id="chatList">
-      <div class="empty-sidebar">No conversations yet.<br/>Use the ✏️ button to start one.</div>
+    <!-- Tabs: DMs / Groups / Requests -->
+    <div class="sb-tabs">
+      <button class="sb-tab active" id="tabDMs"    onclick="switchSideTab('dms')">DMs</button>
+      <button class="sb-tab"        id="tabGroups" onclick="switchSideTab('groups')">Groups</button>
+      <button class="sb-tab"        id="tabReqs"   onclick="switchSideTab('reqs')">Requests <span id="reqCount" style="display:none;background:var(--danger);color:#fff;border-radius:8px;padding:0 5px;font-size:10px;margin-left:2px"></span></button>
     </div>
+    <div class="chat-list" id="chatList"></div>
     <div class="sb-footer">
       <div class="my-av" id="myAvatar" onclick="openModal('settingsModal')">🧑</div>
       <div class="my-info">
@@ -300,9 +381,6 @@ textarea.field-input{resize:vertical;min-height:70px}
           <div class="ch-status" id="headerStatus">● Online</div>
         </div>
         <div class="h-actions">
-          <button class="icon-btn" title="Voice call" onclick="startCall()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </button>
           <button class="icon-btn" title="Chat options" id="chatMenuBtn" onclick="toggleDropdown('chatDropdown','chatMenuBtn')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
           </button>
@@ -317,16 +395,32 @@ textarea.field-input{resize:vertical;min-height:70px}
       </div>
 
       <div class="input-area">
-        <div class="input-wrap">
-          <button class="attach-inner-btn" title="Attach file" onclick="document.getElementById('fileInput').click()">
+        <div class="input-wrap" style="position:relative">
+          <button class="input-icon-btn" title="Attach file" onclick="document.getElementById('fileInput').click()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           </button>
           <textarea class="msg-input" id="msgInput" rows="1" placeholder="Message… (Shift+Enter for new line)"></textarea>
-          <button class="emoji-btn" title="Emoji" onclick="toggleEmojiPicker(event)">
+          <button class="input-icon-btn" title="GIF" onclick="toggleGifPicker(event)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M8 12v-2h2"/><path d="M14 10v2a2 2 0 0 0 4 0v-2"/><line x1="11" y1="10" x2="11" y2="14"/><line x1="8" y1="14" x2="10" y2="14"/></svg>
+          </button>
+          <button class="input-icon-btn" title="Emoji" onclick="toggleEmojiPicker(event)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
           </button>
+          <!-- GIF Picker -->
+          <div class="gif-picker" id="gifPicker">
+            <div class="gif-search-row">
+              <input class="gif-search" id="gifSearch" placeholder="Search GIFs…" oninput="handleGifSearch(this.value)"/>
+            </div>
+            <div class="gif-grid" id="gifGrid"><div class="gif-loading">Loading GIFs…</div></div>
+          </div>
+          <!-- Emoji Picker -->
           <div class="emoji-picker" id="emojiPicker">
-            <input class="ep-search" placeholder="Search emoji…" oninput="filterEmoji(this.value)"/>
+            <div class="ep-tabs">
+              <button class="ep-tab active" onclick="switchEpTab('emoji',this)">Emoji</button>
+              <button class="ep-tab" onclick="switchEpTab('recent',this)">Recent</button>
+            </div>
+            <input class="ep-search" id="epSearch" placeholder="Search emoji…" oninput="filterEmoji(this.value)"/>
+            <div class="ep-cats" id="epCats"></div>
             <div class="ep-grid" id="epGrid"></div>
           </div>
         </div>
@@ -339,15 +433,15 @@ textarea.field-input{resize:vertical;min-height:70px}
   </main>
 </div>
 
-<!-- Dropdowns (portalled to body so they're never clipped) -->
+<!-- Dropdowns -->
 <div class="dropdown" id="sideDropdown" style="display:none">
+  <div class="dd-item" onclick="openModal('createGroupModal');closeDropdowns()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Create Group
+  </div>
   <div class="dd-item" onclick="openModal('settingsModal');closeDropdowns()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15 1.65 1.65 0 0 0 3.17 14H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68 1.65 1.65 0 0 0 10 3.17V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     Account Settings
-  </div>
-  <div class="dd-item" onclick="openModal('newChatModal');closeDropdowns()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    New Chat
   </div>
   <div class="dd-sep"></div>
   <div class="dd-item danger" onclick="doLogout();closeDropdowns()">
@@ -357,7 +451,15 @@ textarea.field-input{resize:vertical;min-height:70px}
 </div>
 
 <div class="dropdown" id="chatDropdown" style="display:none">
-  <div class="dd-item danger" onclick="removeContact();closeDropdowns()">
+  <div class="dd-item" id="ddInviteGroup" onclick="openInviteToGroup();closeDropdowns()" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+    Invite Member
+  </div>
+  <div class="dd-item" id="ddLeaveGroup" onclick="leaveGroup();closeDropdowns()" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    Leave Group
+  </div>
+  <div class="dd-item danger" id="ddRemoveContact" onclick="removeContact();closeDropdowns()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
     Remove Contact
   </div>
@@ -377,6 +479,56 @@ textarea.field-input{resize:vertical;min-height:70px}
       </div>
       <div id="userSearchResults"></div>
       <div class="msg-error" id="newChatErr"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CREATE GROUP MODAL ════════════════════════════════════════════ -->
+<div class="overlay" id="createGroupModal">
+  <div class="modal" style="width:460px">
+    <div class="modal-header">
+      <span class="modal-title">Create Group</span>
+      <button class="modal-close" onclick="closeModal('createGroupModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field-label" style="margin-bottom:8px">Group Logo</div>
+      <div class="logo-picker-row">
+        <div class="logo-preview-lg" id="groupLogoPreview">👥</div>
+        <div>
+          <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px;margin-bottom:6px" onclick="document.getElementById('groupLogoFile').click()">Upload image</button>
+          <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="toggleGroupEmojiPicker()">Choose emoji</button>
+          <input type="file" id="groupLogoFile" accept="image/*" style="display:none" onchange="previewGroupLogoFile(this)"/>
+        </div>
+      </div>
+      <div id="groupEmojiPicker" style="display:none;margin-bottom:14px">
+        <div class="field-label">Pick a logo emoji</div>
+        <div class="logo-emoji-grid" id="groupEmojiGrid"></div>
+      </div>
+      <div class="field-group"><label class="field-label">Group Name</label><input class="field-input" id="groupName" placeholder="e.g. Team Alpha"/></div>
+      <div class="field-group"><label class="field-label">Description <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10.5px;color:var(--text-muted)">(optional)</span></label><input class="field-input" id="groupDesc" placeholder="What's this group about?"/></div>
+      <div class="msg-error" id="createGroupErr"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('createGroupModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="doCreateGroup()">Create Group</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INVITE TO GROUP MODAL ════════════════════════════════════════ -->
+<div class="overlay" id="inviteGroupModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Invite to Group</span>
+      <button class="modal-close" onclick="closeModal('inviteGroupModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field-group">
+        <label class="field-label">Search user to invite</label>
+        <input class="field-input" id="inviteSearch" placeholder="username…" oninput="searchUsers(this.value,'inviteResults')"/>
+      </div>
+      <div id="inviteResults"></div>
+      <div class="msg-error" id="inviteErr"></div>
     </div>
   </div>
 </div>
@@ -419,16 +571,29 @@ textarea.field-input{resize:vertical;min-height:70px}
 
 <script>
 /* ════════════════════════════════════════════
+   CONFIG (injected from Flask)
+════════════════════════════════════════════ */
+const TENOR_KEY     = "{{ tenor_key }}";
+const GOOGLE_ENABLED = {{ 'true' if google_enabled else 'false' }};
+
+/* ════════════════════════════════════════════
    STATE
 ════════════════════════════════════════════ */
 let ME = null;
 let contacts = [];
+let groups   = [];
+let pendingRequests = [];
+let pendingGroupInvites = [];
 let activeContact = null;
-let activeRoom = null;
+let activeGroup   = null;
+let activeRoom    = null;
+let activeIsGroup = false;
 let messages = {};
 let typingTimer = null;
 let isTyping = false;
+let currentSideTab = 'dms';
 const _pendingUsers = {};
+let recentEmoji = JSON.parse(localStorage.getItem('rc_recent_emoji') || '[]');
 
 /* ════════════════════════════════════════════
    SOCKET
@@ -439,24 +604,61 @@ socket.on('new_message', msg => {
   if (!messages[msg.room]) messages[msg.room] = [];
   messages[msg.room].push(msg);
   if (msg.room === activeRoom) { appendMsg(msg); scrollBottom(); }
-  const c = contacts.find(x => x.room === msg.room);
-  if (c) {
-    c.last_msg = msg;
-    if (msg.room !== activeRoom) c.unread = (c.unread||0)+1;
-    renderSidebar();
+  const contact = contacts.find(x => x.room === msg.room);
+  if (contact) {
+    contact.last_msg = msg;
+    if (msg.room !== activeRoom) contact.unread = (contact.unread||0)+1;
   }
+  const group = groups.find(x => x.room === msg.room);
+  if (group) {
+    group.last_msg = msg;
+    if (msg.room !== activeRoom) group.unread = (group.unread||0)+1;
+  }
+  renderSideList();
 });
 
 socket.on('message_deleted', ({ id }) => {
   for (const room in messages) {
     const m = messages[room].find(x => x.id === id);
-    if (m) { m.deleted = true; m.text = ''; m.file_url = null; }
+    if (m) { m.deleted = true; m.text = ''; m.file_url = null; m.gif_url = null; }
   }
   if (activeRoom) renderMessages(activeRoom);
 });
 
-socket.on('typing',      ({ user_id }) => { if (activeContact && activeContact.id === user_id) showTyping(); });
-socket.on('stop_typing', ()            => hideTyping());
+socket.on('typing',      ({ user_id, display_name }) => {
+  if ((activeContact && activeContact.id === user_id) ||
+      (activeGroup && activeGroup.members.find(m=>m.id===user_id)))
+    showTyping(display_name);
+});
+socket.on('stop_typing', () => hideTyping());
+
+socket.on('friend_request', req => {
+  pendingRequests.push(req);
+  updateReqBadge();
+  toast(`📬 Friend request from ${req.sender?.display_name||'someone'}`);
+  renderSideList();
+});
+
+socket.on('request_accepted', ({ contact }) => {
+  if (!contacts.find(c=>c.room===contact.room)) {
+    contacts.push(contact);
+    renderSideList();
+  }
+  toast(`✅ Now chatting with ${contact.display_name}`);
+});
+
+socket.on('group_invite', inv => {
+  pendingGroupInvites.push(inv);
+  updateReqBadge();
+  toast(`📨 Invited to group: ${inv.group?.name||'a group'}`);
+  renderSideList();
+});
+
+socket.on('group_member_joined', ({ group, user }) => {
+  const idx = groups.findIndex(g=>g.id===group.id);
+  if (idx>=0) groups[idx]=group; else groups.push(group);
+  renderSideList();
+});
 
 /* ════════════════════════════════════════════
    AUTH
@@ -508,37 +710,75 @@ function onAuthed(user) {
   ME = user;
   document.getElementById('authScreen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
+  if (GOOGLE_ENABLED) {
+    document.getElementById('googleAuthSection').style.display = 'block';
+    document.getElementById('googleRegSection').style.display = 'block';
+  }
   updateMyProfile();
   socket.connect();
-  loadContacts();
+  Promise.all([loadContacts(), loadGroups(), loadPendingRequests(), loadPendingGroupInvites()]);
 }
 
 async function checkSession() {
+  // Show Google button if enabled
+  if (GOOGLE_ENABLED) {
+    document.getElementById('googleAuthSection').style.display = 'block';
+    document.getElementById('googleRegSection').style.display = 'block';
+  }
+  // Check if came back from Google OAuth
+  const params = new URLSearchParams(location.search);
+  if (params.get('authed')) {
+    history.replaceState({}, '', '/');
+    const r = await api('GET','/api/auth/me');
+    if (r.user) { onAuthed(r.user); return; }
+  }
+  if (params.get('auth_error')) {
+    toast('Google login failed: ' + params.get('auth_error'), 'error');
+    history.replaceState({}, '', '/');
+  }
   const r = await api('GET','/api/auth/me');
   if (r.user) onAuthed(r.user);
 }
 
 /* ════════════════════════════════════════════
-   CONTACTS
+   SIDEBAR TABS
 ════════════════════════════════════════════ */
-async function loadContacts() {
-  const data = await fetch('/api/contacts',{credentials:'same-origin'}).then(r=>r.json());
-  contacts = Array.isArray(data) ? data : [];
-  renderSidebar();
+function switchSideTab(tab) {
+  currentSideTab = tab;
+  ['dms','groups','reqs'].forEach(t => {
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1))
+      ?.classList.toggle('active', t===tab);
+  });
+  renderSideList();
 }
 
-function renderSidebar(filter='') {
+function updateReqBadge() {
+  const total = pendingRequests.length + pendingGroupInvites.length;
+  const el = document.getElementById('reqCount');
+  if (total > 0) { el.style.display='inline'; el.textContent=total; }
+  else { el.style.display='none'; }
+}
+
+function renderSideList(filter='') {
   const list = document.getElementById('chatList');
+  if (currentSideTab === 'dms') renderDMs(list, filter);
+  else if (currentSideTab === 'groups') renderGroups(list, filter);
+  else if (currentSideTab === 'reqs') renderRequests(list);
+}
+
+function filterContacts(q) { renderSideList(q); }
+
+function renderDMs(list, filter='') {
   const items = filter
-    ? contacts.filter(c => (c.display_name||'').toLowerCase().includes(filter.toLowerCase()) || (c.username||'').toLowerCase().includes(filter.toLowerCase()))
+    ? contacts.filter(c=>(c.display_name||'').toLowerCase().includes(filter.toLowerCase()) || (c.username||'').toLowerCase().includes(filter.toLowerCase()))
     : contacts;
   if (!items.length) {
     list.innerHTML = '<div class="empty-sidebar">No contacts yet.<br/>Use the ✏️ button to add someone.</div>';
     return;
   }
   list.innerHTML = items.map(c => {
-    const av = renderAvatarHtml(c.avatar, c.display_name, 42);
-    const last = c.last_msg ? (c.last_msg.deleted ? '<i>Message deleted</i>' : escHtml(c.last_msg.text || (c.last_msg.file_name ? '📎 '+c.last_msg.file_name : ''))) : '<span style="color:var(--text-muted)">No messages yet</span>';
+    const av = renderAvatarHtml(c.avatar, c.display_name, 42, false);
+    const last = c.last_msg ? (c.last_msg.deleted ? '<i>Message deleted</i>' : escHtml(c.last_msg.gif_url ? '🎞 GIF' : c.last_msg.text || (c.last_msg.file_name ? '📎 '+c.last_msg.file_name : ''))) : '<span style="color:var(--text-muted)">No messages yet</span>';
     const time = c.last_msg ? c.last_msg.time : '';
     const badge = c.unread ? `<span class="unread-badge">${c.unread>99?'99+':c.unread}</span>` : '';
     const isActive = activeContact && activeContact.id === c.id;
@@ -552,88 +792,360 @@ function renderSidebar(filter='') {
   }).join('');
 }
 
-function filterContacts(q) { renderSidebar(q); }
-
-function renderAvatarHtml(avatar, name, size) {
-  const s = `width:${size}px;height:${size}px;font-size:${Math.round(size*.44)}px`;
-  if (avatar && avatar.startsWith('/static/')) {
-    return `<div class="av-circle" style="${s}"><img src="${escHtml(avatar)}" alt="${escHtml(name)}"/></div>`;
+function renderGroups(list, filter='') {
+  const items = filter
+    ? groups.filter(g=>(g.name||'').toLowerCase().includes(filter.toLowerCase()))
+    : groups;
+  if (!items.length) {
+    list.innerHTML = '<div class="empty-sidebar">No groups yet.<br/>Use ⋮ → Create Group.</div>';
+    return;
   }
-  return `<div class="av-circle" style="${s}">${escHtml(avatar||'🧑')}</div>`;
+  list.innerHTML = items.map(g => {
+    const av = renderAvatarHtml(g.logo, g.name, 42, true);
+    const last = g.last_msg ? (g.last_msg.deleted ? '<i>Message deleted</i>' : escHtml(g.last_msg.gif_url ? '🎞 GIF' : g.last_msg.text || (g.last_msg.file_name ? '📎 '+g.last_msg.file_name : ''))) : '<span style="color:var(--text-muted)">No messages yet</span>';
+    const badge = g.unread ? `<span class="unread-badge">${g.unread>99?'99+':g.unread}</span>` : '';
+    const isActive = activeGroup && activeGroup.id === g.id;
+    return `<div class="chat-item${isActive?' active':''}" onclick="openGroupChat(${g.id})">
+      <div class="chat-av">${av}</div>
+      <div class="chat-info">
+        <div class="chat-top"><span class="chat-name">${escHtml(g.name)}</span><span class="chat-time">${g.member_count} members</span></div>
+        <div class="chat-prev"><span class="chat-prev-text">${last}</span>${badge}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-async function searchUsers(q) {
-  const el = document.getElementById('userSearchResults');
+function renderRequests(list) {
+  const allReqs = [
+    ...pendingRequests.map(r => ({type:'friend', data:r})),
+    ...pendingGroupInvites.map(i => ({type:'group', data:i})),
+  ];
+  if (!allReqs.length) {
+    list.innerHTML = '<div class="empty-sidebar">No pending requests.</div>';
+    return;
+  }
+  list.innerHTML = allReqs.map(({type, data}) => {
+    if (type === 'friend') {
+      const u = data.sender;
+      const av = renderAvatarHtml(u?.avatar, u?.display_name, 38, false);
+      return `<div class="req-item">
+        ${av}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">${escHtml(u?.display_name||'?')}</div>
+          <div style="font-size:11px;color:var(--text-muted)">wants to connect</div>
+        </div>
+        <div class="req-actions">
+          <button class="req-accept" onclick="acceptFriendReq(${data.id})">Accept</button>
+          <button class="req-decline" onclick="declineFriendReq(${data.id})">Decline</button>
+        </div>
+      </div>`;
+    } else {
+      const g = data.group;
+      const inv = data.inviter;
+      const av = renderAvatarHtml(g?.logo, g?.name, 38, true);
+      return `<div class="req-item">
+        ${av}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">${escHtml(g?.name||'Group')}</div>
+          <div style="font-size:11px;color:var(--text-muted)">by ${escHtml(inv?.display_name||'?')}</div>
+        </div>
+        <div class="req-actions">
+          <button class="req-accept" onclick="acceptGroupInv(${data.id})">Join</button>
+          <button class="req-decline" onclick="declineGroupInv(${data.id})">Decline</button>
+        </div>
+      </div>`;
+    }
+  }).join('');
+}
+
+function renderAvatarHtml(avatar, name, size, isGroup) {
+  const s = `width:${size}px;height:${size}px;font-size:${Math.round(size*.44)}px`;
+  const cls = isGroup ? 'av-circle group' : 'av-circle';
+  if (avatar && avatar.startsWith('/static/')) {
+    return `<div class="${cls}" style="${s}"><img src="${escHtml(avatar)}" alt="${escHtml(name)}"/></div>`;
+  }
+  return `<div class="${cls}" style="${s}">${escHtml(avatar||'🧑')}</div>`;
+}
+
+/* ════════════════════════════════════════════
+   LOAD DATA
+════════════════════════════════════════════ */
+async function loadContacts() {
+  const data = await fetch('/api/contacts',{credentials:'same-origin'}).then(r=>r.json());
+  contacts = Array.isArray(data) ? data : [];
+  renderSideList();
+}
+
+async function loadGroups() {
+  const data = await fetch('/api/groups',{credentials:'same-origin'}).then(r=>r.json());
+  groups = Array.isArray(data) ? data.map(g=>({...g, unread:0, last_msg:null})) : [];
+  renderSideList();
+}
+
+async function loadPendingRequests() {
+  const data = await fetch('/api/requests/pending',{credentials:'same-origin'}).then(r=>r.json());
+  pendingRequests = Array.isArray(data) ? data : [];
+  updateReqBadge();
+  if (currentSideTab==='reqs') renderSideList();
+}
+
+async function loadPendingGroupInvites() {
+  const data = await fetch('/api/groups/invites/pending',{credentials:'same-origin'}).then(r=>r.json());
+  pendingGroupInvites = Array.isArray(data) ? data : [];
+  updateReqBadge();
+}
+
+/* ════════════════════════════════════════════
+   FRIEND REQUESTS
+════════════════════════════════════════════ */
+async function acceptFriendReq(id) {
+  const r = await api('POST', `/api/requests/${id}/accept`);
+  if (r.error) { toast(r.error, 'error'); return; }
+  pendingRequests = pendingRequests.filter(x=>x.id!==id);
+  if (r.contact) contacts.push(r.contact);
+  updateReqBadge();
+  renderSideList();
+  toast('✅ Contact added!', 'success');
+}
+
+async function declineFriendReq(id) {
+  await api('POST', `/api/requests/${id}/decline`);
+  pendingRequests = pendingRequests.filter(x=>x.id!==id);
+  updateReqBadge();
+  renderSideList();
+}
+
+/* ════════════════════════════════════════════
+   GROUP INVITES
+════════════════════════════════════════════ */
+async function acceptGroupInv(id) {
+  const r = await api('POST', `/api/groups/invites/${id}/accept`);
+  if (r.error) { toast(r.error, 'error'); return; }
+  pendingGroupInvites = pendingGroupInvites.filter(x=>x.id!==id);
+  if (r.group) { groups.push({...r.group, unread:0, last_msg:null}); }
+  updateReqBadge();
+  renderSideList();
+  toast('🎉 Joined group!', 'success');
+}
+
+async function declineGroupInv(id) {
+  await api('POST', `/api/groups/invites/${id}/decline`);
+  pendingGroupInvites = pendingGroupInvites.filter(x=>x.id!==id);
+  updateReqBadge();
+  renderSideList();
+}
+
+/* ════════════════════════════════════════════
+   USER SEARCH / ADD CONTACT
+════════════════════════════════════════════ */
+async function searchUsers(q, resultsId='userSearchResults') {
+  const el = document.getElementById(resultsId);
   if (!q || q.length < 2) { el.innerHTML = ''; return; }
   const users = await fetch(`/api/users/search?q=${encodeURIComponent(q)}`,{credentials:'same-origin'}).then(r=>r.json());
   users.forEach(u => { _pendingUsers[u.id] = u.username; });
   if (!users.length) { el.innerHTML = '<div style="font-size:12.5px;color:var(--text-muted);padding:8px 0">No users found</div>'; return; }
+
+  const isInvite = resultsId === 'inviteResults';
   el.innerHTML = `<div class="search-results">${users.map(u=>`
-    <div class="sr-item" onclick="addContactById(${u.id})">
-      ${renderAvatarHtml(u.avatar,u.display_name,36)}
+    <div class="sr-item" onclick="${isInvite ? `doInviteUser(${u.id})` : `sendFriendRequest(${u.id})`}">
+      ${renderAvatarHtml(u.avatar,u.display_name,36,false)}
       <div><div class="sr-name">${escHtml(u.display_name)}</div><div class="sr-user">@${escHtml(u.username)}</div></div>
+      <div style="margin-left:auto;font-size:12px;color:var(--accent)">${isInvite?'Invite':'Add'}</div>
     </div>`).join('')}</div>`;
 }
 
-async function addContactById(uid) {
+async function sendFriendRequest(uid) {
   const username = _pendingUsers[uid];
   if (!username) return;
-  const r = await fetch('/api/contacts/add',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({username})});
-  const data = await r.json();
-  if (data.error) { document.getElementById('newChatErr').textContent = data.error; return; }
+  const r = await api('POST','/api/requests/send',{username});
+  if (r.error) { document.getElementById('newChatErr').textContent = r.error; return; }
   closeModal('newChatModal');
-  await loadContacts();
-  openChat(data.id);
-  toast('Contact added!','success');
+  if (r.status === 'accepted') {
+    // auto-accepted (mutual)
+    if (r.contact) contacts.push(r.contact);
+    renderSideList();
+    toast('✅ Contact added!','success');
+    openChat(r.contact.id);
+  } else {
+    toast('📬 Friend request sent!','success');
+  }
 }
 
 async function removeContact() {
   if (!activeContact) return;
   if (!confirm(`Remove ${activeContact.display_name} from contacts?`)) return;
   await fetch(`/api/contacts/${activeContact.id}`,{method:'DELETE',credentials:'same-origin'});
+  contacts = contacts.filter(c=>c.id!==activeContact.id);
   activeContact = null; activeRoom = null;
   document.getElementById('chatView').style.display = 'none';
   document.getElementById('noChatPlaceholder').style.display = 'flex';
-  await loadContacts();
+  renderSideList();
   toast('Contact removed');
 }
 
 /* ════════════════════════════════════════════
-   CHAT / MESSAGES
+   GROUPS
+════════════════════════════════════════════ */
+let selectedGroupLogo = '👥';
+let groupLogoFileData = null;
+
+function toggleGroupEmojiPicker() {
+  const el = document.getElementById('groupEmojiPicker');
+  el.style.display = el.style.display==='none' ? 'block' : 'none';
+  if (el.style.display !== 'none') buildGroupEmojiGrid();
+}
+
+const GROUP_EMOJIS = ['👥','🏠','🏢','🌍','⚔️','🧙','🏆','🎯','🎮','🎵','🔬','💡','🚀','⭐','🌈','🔥','💎','🦁','🐉','🌲','🎨','📚','🍕','☕','💻','🎭','🌙','🌊','🦅','🧩','🎸','💪','🛡️','🔮','🌸'];
+
+function buildGroupEmojiGrid() {
+  document.getElementById('groupEmojiGrid').innerHTML = GROUP_EMOJIS.map(e=>
+    `<div class="logo-emoji-opt${e===selectedGroupLogo?' selected':''}" onclick="pickGroupEmoji('${e}')">${e}</div>`
+  ).join('');
+}
+function pickGroupEmoji(e) {
+  selectedGroupLogo = e; groupLogoFileData = null;
+  document.getElementById('groupLogoPreview').textContent = e;
+  document.getElementById('groupLogoPreview').innerHTML = e;
+  buildGroupEmojiGrid();
+}
+function previewGroupLogoFile(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    groupLogoFileData = file;
+    document.getElementById('groupLogoPreview').innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>`;
+    selectedGroupLogo = null;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function doCreateGroup() {
+  const name = document.getElementById('groupName').value.trim();
+  const desc = document.getElementById('groupDesc').value.trim();
+  if (!name) { document.getElementById('createGroupErr').textContent='Group name required'; return; }
+  const logo = selectedGroupLogo || '👥';
+  const r = await api('POST','/api/groups',{name, description:desc, logo});
+  if (r.error) { document.getElementById('createGroupErr').textContent=r.error; return; }
+
+  // Upload logo file if one was chosen
+  if (groupLogoFileData && r.id) {
+    const fd = new FormData();
+    fd.append('file', groupLogoFileData);
+    const lr = await fetch(`/api/groups/${r.id}/logo`,{method:'POST',body:fd,credentials:'same-origin'}).then(x=>x.json());
+    if (!lr.error && lr.logo) r.logo = lr.logo;
+  }
+
+  groups.push({...r, unread:0, last_msg:null});
+  closeModal('createGroupModal');
+  renderSideList();
+  toast('🎉 Group created!','success');
+  openGroupChat(r.id);
+  // reset
+  selectedGroupLogo='👥'; groupLogoFileData=null;
+  document.getElementById('groupName').value='';
+  document.getElementById('groupDesc').value='';
+  document.getElementById('groupLogoPreview').textContent='👥';
+  document.getElementById('groupEmojiPicker').style.display='none';
+  document.getElementById('createGroupErr').textContent='';
+}
+
+function openInviteToGroup() {
+  if (!activeGroup) return;
+  document.getElementById('inviteSearch').value='';
+  document.getElementById('inviteResults').innerHTML='';
+  document.getElementById('inviteErr').textContent='';
+  openModal('inviteGroupModal');
+}
+
+async function doInviteUser(uid) {
+  const username = _pendingUsers[uid];
+  if (!username || !activeGroup) return;
+  const r = await api('POST',`/api/groups/${activeGroup.id}/invite`,{username});
+  if (r.error) { document.getElementById('inviteErr').textContent=r.error; return; }
+  closeModal('inviteGroupModal');
+  toast('📨 Invitation sent!','success');
+}
+
+async function leaveGroup() {
+  if (!activeGroup) return;
+  if (!confirm(`Leave ${activeGroup.name}?`)) return;
+  await api('POST',`/api/groups/${activeGroup.id}/leave`);
+  groups = groups.filter(g=>g.id!==activeGroup.id);
+  activeGroup=null; activeRoom=null;
+  document.getElementById('chatView').style.display='none';
+  document.getElementById('noChatPlaceholder').style.display='flex';
+  renderSideList();
+  toast('Left group');
+}
+
+/* ════════════════════════════════════════════
+   OPEN CHAT
 ════════════════════════════════════════════ */
 async function openChat(contactId) {
   const c = contacts.find(x => x.id === contactId);
   if (!c) return;
   if (activeRoom) socket.emit('leave', { room: activeRoom });
-  activeContact = c;
-  activeRoom = c.room;
+  activeContact = c; activeGroup = null; activeRoom = c.room; activeIsGroup = false;
   c.unread = 0;
-
-  const avEl = document.getElementById('headerAv');
-  if (c.avatar && c.avatar.startsWith('/static/')) {
-    avEl.innerHTML = `<img src="${escHtml(c.avatar)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
-    avEl.style.fontSize = '';
-  } else {
-    avEl.textContent = c.avatar || '🧑';
-    avEl.style.fontSize = '18px';
-  }
-  document.getElementById('headerName').textContent = c.display_name;
-  document.getElementById('headerStatus').textContent = `● ${c.status||'Online'}`;
-  document.getElementById('headerStatus').style.color = c.status==='Online' ? 'var(--accent)' : 'var(--text-muted)';
-
-  document.getElementById('noChatPlaceholder').style.display = 'none';
-  document.getElementById('chatView').style.display = 'flex';
-  renderSidebar(document.getElementById('sideSearch').value);
-
-  if (!messages[activeRoom]) {
-    const msgs = await fetch(`/api/messages/${activeRoom}`,{credentials:'same-origin'}).then(r=>r.json());
-    messages[activeRoom] = Array.isArray(msgs) ? msgs : [];
-  }
-  renderMessages(activeRoom);
-  scrollBottom();
+  updateChatHeader(c.avatar, c.display_name, `● ${c.status||'Online'}`, c.status==='Online'?'var(--accent)':'var(--text-muted)', false);
+  // dropdown menu options
+  document.getElementById('ddInviteGroup').style.display='none';
+  document.getElementById('ddLeaveGroup').style.display='none';
+  document.getElementById('ddRemoveContact').style.display='flex';
+  showChatView();
+  await loadAndRenderMessages(activeRoom);
   socket.emit('join', { room: activeRoom });
+  renderSideList();
 }
 
+async function openGroupChat(groupId) {
+  const g = groups.find(x => x.id === groupId);
+  if (!g) return;
+  if (activeRoom) socket.emit('leave', { room: activeRoom });
+  activeGroup = g; activeContact = null; activeRoom = g.room; activeIsGroup = true;
+  g.unread = 0;
+  updateChatHeader(g.logo, g.name, `${g.member_count} members`, 'var(--text-muted)', true);
+  document.getElementById('ddInviteGroup').style.display='flex';
+  document.getElementById('ddLeaveGroup').style.display='flex';
+  document.getElementById('ddRemoveContact').style.display='none';
+  showChatView();
+  await loadAndRenderMessages(activeRoom);
+  socket.emit('join', { room: activeRoom });
+  renderSideList();
+}
+
+function updateChatHeader(avatar, name, statusText, statusColor, isGroup) {
+  const avEl = document.getElementById('headerAv');
+  avEl.className = isGroup ? 'av-circle group' : 'av-circle';
+  avEl.style.cssText = 'width:40px;height:40px;font-size:18px';
+  if (avatar && avatar.startsWith('/static/')) {
+    avEl.innerHTML = `<img src="${escHtml(avatar)}" style="width:100%;height:100%;object-fit:cover;border-radius:${isGroup?'10px':'50%'}"/>`;
+  } else {
+    avEl.textContent = avatar || '🧑';
+  }
+  document.getElementById('headerName').textContent = name;
+  const statusEl = document.getElementById('headerStatus');
+  statusEl.textContent = statusText;
+  statusEl.style.color = statusColor;
+}
+
+function showChatView() {
+  document.getElementById('noChatPlaceholder').style.display = 'none';
+  document.getElementById('chatView').style.display = 'flex';
+}
+
+async function loadAndRenderMessages(room) {
+  if (!messages[room]) {
+    const msgs = await fetch(`/api/messages/${room}`,{credentials:'same-origin'}).then(r=>r.json());
+    messages[room] = Array.isArray(msgs) ? msgs : [];
+  }
+  renderMessages(room);
+  scrollBottom();
+}
+
+/* ════════════════════════════════════════════
+   RENDER MESSAGES
+════════════════════════════════════════════ */
 function renderMessages(room) {
   const area = document.getElementById('messagesArea');
   const dz   = document.getElementById('dropZone');
@@ -669,10 +1181,21 @@ function appendMsg(msg, bulk=false, allMsgs=null, idx=0) {
   row.dataset.id = msg.id;
 
   let inner = '';
+
+  // In group chats show sender name for non-me messages
+  if (activeIsGroup && !isMe && !msg.deleted && !sameP) {
+    const sender = activeGroup?.members?.find(m=>m.id===msg.sender_id);
+    const sName = sender?.display_name || 'Member';
+    inner += `<div class="msg-sender-name">${escHtml(sName)}</div>`;
+  }
+
   if (msg.deleted) {
-    inner = '<span class="msg-deleted">🚫 Message deleted</span>';
+    inner += '<span class="msg-deleted">🚫 Message deleted</span>';
   } else {
     if (msg.text) inner += `<span>${escHtml(msg.text).replace(/\n/g,'<br/>')}</span>`;
+    if (msg.gif_url) {
+      inner += `<img class="msg-gif" src="${escHtml(msg.gif_url)}" alt="GIF" loading="lazy" onclick="window.open(this.src,'_blank')"/>`;
+    }
     if (msg.file_url) {
       if (/\.(png|jpe?g|gif|webp)$/i.test(msg.file_url)) {
         inner += `<img class="msg-img" src="${escHtml(msg.file_url)}" alt="${escHtml(msg.file_name||'image')}" onclick="window.open(this.src,'_blank')"/>`;
@@ -706,12 +1229,13 @@ function scrollBottom() {
 }
 
 let _typingEl = null;
-function showTyping() {
+function showTyping(name) {
   if (_typingEl) return;
   const area = document.getElementById('messagesArea');
   _typingEl = document.createElement('div');
   _typingEl.className = 'typing-row';
-  _typingEl.innerHTML = '<div class="typing-bubble"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div>';
+  const label = activeIsGroup && name ? `<span style="font-size:11px;color:var(--text-muted);margin-left:8px">${escHtml(name)}</span>` : '';
+  _typingEl.innerHTML = `<div class="typing-bubble"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div>${label}`;
   area.appendChild(_typingEl);
   scrollBottom();
 }
@@ -730,6 +1254,12 @@ function sendMessage() {
   input.style.height = '';
   stopTypingSignal();
   document.getElementById('emojiPicker').classList.remove('open');
+}
+
+function sendGif(url) {
+  if (!activeRoom) return;
+  socket.emit('send_message', { room: activeRoom, text: '', gif_url: url });
+  document.getElementById('gifPicker').classList.remove('open');
 }
 
 document.getElementById('msgInput').addEventListener('keydown', e => {
@@ -766,31 +1296,148 @@ mainPanel.addEventListener('dragleave', e => { if (!mainPanel.contains(e.related
 mainPanel.addEventListener('drop', e => { e.preventDefault(); document.getElementById('dropZone').classList.remove('active'); const f=e.dataTransfer?.files[0]; if(f) uploadAndSend(f); });
 
 /* ════════════════════════════════════════════
-   EMOJI PICKER
+   EMOJI PICKER (extended, with categories)
 ════════════════════════════════════════════ */
-const EMOJIS = ['😀','😁','😂','🤣','😃','😄','😅','😆','😉','😊','😋','😎','🥰','😍','🤩','😘','😗','😙','😚','🙂','🤗','🤫','🤔','😐','😑','😶','🙄','😏','😣','😥','😮','😯','😪','😫','😴','😌','😛','😜','😝','🤤','😒','😓','😔','😕','🙃','🤑','😲','🙁','😖','😞','😟','😤','😢','😭','😦','😧','😨','😩','🤯','😬','😰','😱','😳','🤪','😵','🤕','🤒','🤮','🤢','🤧','😷','🤠','🥳','🥴','🥺','🤡','👻','👽','🤖','❤️','🧡','💛','💚','💙','💜','🖤','💔','💯','💥','💫','💦','💨','💬','💭','💤','👋','✋','👌','✌️','🤞','🤘','👍','👎','✊','👏','🙌','🙏','💪','👀','🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐯','🦁','🐮','🐸','🐵','🙈','🙉','🙊','🐔','🐦','🦉','🦅','🐉','🦋','🌸','🌺','🌻','🌹','🌷','🌱','🌿','☘️','🍀','🍁','🍂','🍃','🌾','🍄','🎄','🌊','🌙','⭐','🌟','✨','🎉','🎊','🎈','🎁','🏆','🥇','🎮','🎯','🎲','🔥','💡','🚀','⚡','🌈','🎵','🎶','🍕','🍔','🍟','🌮','🌯','🥗','🍜','🍣','🍦','☕','🍵','🧃','🥤','🍺','🍻','🥂','🍷','🍸'];
+const EMOJI_CATEGORIES = {
+  '😀': ['😀','😁','😂','🤣','😃','😄','😅','😆','😉','😊','😋','😎','🥰','😍','🤩','😘','😗','😙','😚','🙂','🤗','🤫','🤔','😐','😑','😶','🙄','😏','😣','😥','😮','😯','😪','😫','😴','😌','😛','😜','😝','🤤','😒','😓','😔','😕','🙃','🤑','😲','🙁','😖','😞','😟','😤','😢','😭','😦','😧','😨','😩','🤯','😬','😰','😱','😳','🤪','😵','🤕','🤒','🤮','🤢','🤧','😷','🤠','🥳','🥴','🥺','🤡','👻','💀','☠️','👽','🤖','🎃','😈','👿','🤬'],
+  '👋': ['👋','✋','🤚','🖐','👌','🤌','✌️','🤞','🤙','🤘','👍','👎','✊','👊','🤛','🤜','👏','🙌','🤲','🙏','💪','🦵','🦶','👀','👁','👅','👄','🫀','🫁','🧠','🦷','🦴','👂','👃','🫦','🤝','🫶'],
+  '🐶': ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐔','🐦','🦉','🦅','🦆','🦚','🦜','🐧','🦢','🦩','🕊','🐺','🦝','🦔','🐗','🦄','🐝','🐛','🦋','🐌','🐚','🦀','🐙','🦑','🐉','🦋','🌸','🌺','🌻','🌹','🌷','🌱','🌿','☘️','🍀','🍁','🍂','🍃','🌾','🍄','🎋','🎍','🌵','🌴','🌲','🌳'],
+  '🍕': ['🍕','🍔','🍟','🌭','🌮','🌯','🥗','🍜','🍣','🍱','🍛','🍚','🍙','🍘','🍥','🥮','🍡','🧁','🎂','🍰','🍩','🍪','🍫','🍬','🍭','🍮','🍯','🍼','🥛','☕','🍵','🧃','🥤','🧋','🍺','🍻','🥂','🍷','🍸','🍹','🍾','🥃','🍶','🧊','🥄','🍴','🥢'],
+  '⚽': ['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🏓','🏸','🥅','⛳','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛷','⛸','🥌','🏋️','🤼','🤸','⛹️','🤺','🏇','🧘','🏄','🏊','🚴','🏆','🥇','🥈','🥉','🎖','🏅','🎗','🎟','🎪','🤹','🎨','🖼','🎭','🎬','🎤','🎧','🎵','🎶','🎸','🎹','🎺','🥁','🎲','🎮','🕹','🎯'],
+  '🚀': ['🚀','✈️','🚁','⛵','🚢','🚂','🚃','🚄','🚅','🚆','🚇','🚈','🚉','🚊','🚝','🚞','🚋','🚌','🚍','🚎','🏎','🚐','🚑','🚒','🚓','🚔','🚕','🚖','🚗','🚘','🚙','🛻','🚚','🛵','🏍','🛺','🚲','🛴','🛶','⛺','🏠','🏡','🏢','🏣','🏤','🏥','🏦','🏧','🏨','🏩','🏪','🏫','🏬','🏭','🏯','🏰','💒','🗼','🗽'],
+  '❤️': ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','❤️‍🔥','❤️‍🩹','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','☮️','✝️','☪️','🕉','☯️','✡️','🛐','🔯','♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓','💯','💥','💫','💦','💨','💬','💭','💤','🔔','🔕','🔊','🔇','📢','📣','🔔','⚡','🌈','✨','🎉','🎊','🎈','🎁','🏆'],
+  '🌙': ['🌙','⭐','🌟','✨','⚡','🌙','🌛','🌜','🌚','🌕','🌖','🌗','🌘','🌑','🌒','🌓','🌔','🌙','🌞','🌝','🌛','🌜','🌚','☀️','🌤','⛅','🌥','☁️','🌦','🌧','⛈','🌩','🌨','❄️','☃️','⛄','🌬','💨','🌀','🌈','🌂','☂️','☔','⛱','⚡','❄️','🌊','💧','💦','🔥','🌋','🗺','⛰','🏔','🏕'],
+};
+
+const ALL_EMOJIS = Object.values(EMOJI_CATEGORIES).flat();
+const CAT_ICONS  = Object.keys(EMOJI_CATEGORIES);
+
+function buildEmojiCats() {
+  document.getElementById('epCats').innerHTML = CAT_ICONS.map((e,i)=>
+    `<button class="ep-cat${i===0?' active':''}" onclick="showEmojiCat(${i},this)" title="${e}">${e}</button>`
+  ).join('');
+}
+
+let currentEpCat = 0;
+function showEmojiCat(idx, btn) {
+  currentEpCat = idx;
+  document.querySelectorAll('.ep-cat').forEach(b=>b.classList.remove('active'));
+  btn?.classList.add('active');
+  buildEmojiGrid(Object.values(EMOJI_CATEGORIES)[idx]);
+  document.getElementById('epSearch').value = '';
+}
 
 function buildEmojiGrid(list) {
   document.getElementById('epGrid').innerHTML = list.map(e=>`<div class="ep-emoji" onclick="insertEmoji('${e}')">${e}</div>`).join('');
 }
-buildEmojiGrid(EMOJIS);
-function filterEmoji(q) { buildEmojiGrid(q ? EMOJIS.filter(e=>e.includes(q)) : EMOJIS); }
+
+function filterEmoji(q) {
+  if (!q) { buildEmojiGrid(Object.values(EMOJI_CATEGORIES)[currentEpCat]); return; }
+  buildEmojiGrid(ALL_EMOJIS.filter(e=>e.includes(q)||q.length<3));
+}
+
 function insertEmoji(e) {
   const input = document.getElementById('msgInput');
   const s = input.selectionStart, v = input.value;
   input.value = v.slice(0,s)+e+v.slice(input.selectionEnd);
   input.selectionStart = input.selectionEnd = s+e.length;
   input.focus();
+  // Track recent
+  recentEmoji = [e, ...recentEmoji.filter(x=>x!==e)].slice(0,27);
+  localStorage.setItem('rc_recent_emoji', JSON.stringify(recentEmoji));
 }
+
+function switchEpTab(tab, btn) {
+  document.querySelectorAll('.ep-tab').forEach(b=>b.classList.remove('active'));
+  btn?.classList.add('active');
+  document.getElementById('epCats').style.display = tab==='emoji' ? 'flex' : 'none';
+  if (tab==='recent') buildEmojiGrid(recentEmoji.length ? recentEmoji : ['😀','👍','❤️','😂','🔥']);
+  else buildEmojiGrid(Object.values(EMOJI_CATEGORIES)[currentEpCat]);
+}
+
 function toggleEmojiPicker(evt) {
   evt && evt.stopPropagation();
-  document.getElementById('emojiPicker').classList.toggle('open');
-}
-document.addEventListener('click', e => {
   const picker = document.getElementById('emojiPicker');
-  if (picker.classList.contains('open') && !picker.contains(e.target) && !e.target.closest('.emoji-btn')) {
-    picker.classList.remove('open');
+  const isOpen = picker.classList.contains('open');
+  closePickers();
+  if (!isOpen) {
+    picker.classList.add('open');
+    buildEmojiCats();
+    buildEmojiGrid(Object.values(EMOJI_CATEGORIES)[0]);
   }
+}
+
+/* ════════════════════════════════════════════
+   GIF PICKER
+════════════════════════════════════════════ */
+let gifSearchTimer = null;
+
+async function loadFeaturedGifs() {
+  const grid = document.getElementById('gifGrid');
+  if (!TENOR_KEY) {
+    grid.innerHTML = `<div class="gif-no-key">Set TENOR_API_KEY to enable GIFs.<br/><a href="https://developers.google.com/tenor/guides/quickstart" target="_blank" rel="noopener">Get a free Tenor API key →</a></div>`;
+    return;
+  }
+  grid.innerHTML = '<div class="gif-loading">Loading…</div>';
+  try {
+    const r = await fetch('/api/gifs/featured?limit=20',{credentials:'same-origin'});
+    const d = await r.json();
+    renderGifs(d.results || []);
+  } catch(e) {
+    grid.innerHTML = '<div class="gif-loading">Failed to load GIFs</div>';
+  }
+}
+
+async function searchGifsApi(q) {
+  const grid = document.getElementById('gifGrid');
+  grid.innerHTML = '<div class="gif-loading">Searching…</div>';
+  try {
+    const r = await fetch(`/api/gifs/search?q=${encodeURIComponent(q)}&limit=20`,{credentials:'same-origin'});
+    const d = await r.json();
+    renderGifs(d.results || []);
+  } catch(e) {
+    grid.innerHTML = '<div class="gif-loading">Search failed</div>';
+  }
+}
+
+function renderGifs(results) {
+  const grid = document.getElementById('gifGrid');
+  if (!results.length) { grid.innerHTML = '<div class="gif-loading">No GIFs found</div>'; return; }
+  grid.innerHTML = results.map(r => {
+    const media = r.media_formats;
+    const url   = media?.tinygif?.url || media?.gif?.url || '';
+    const preview = media?.tinygif?.url || media?.gif?.url || '';
+    return `<div class="gif-item" onclick="sendGif('${escHtml(url)}')"><img src="${escHtml(preview)}" loading="lazy" alt="gif"/></div>`;
+  }).join('');
+}
+
+function handleGifSearch(q) {
+  clearTimeout(gifSearchTimer);
+  if (!q) { loadFeaturedGifs(); return; }
+  gifSearchTimer = setTimeout(() => searchGifsApi(q), 400);
+}
+
+function toggleGifPicker(evt) {
+  evt && evt.stopPropagation();
+  const picker = document.getElementById('gifPicker');
+  const isOpen = picker.classList.contains('open');
+  closePickers();
+  if (!isOpen) {
+    picker.classList.add('open');
+    if (!document.getElementById('gifSearch').value) loadFeaturedGifs();
+  }
+}
+
+function closePickers() {
+  document.getElementById('emojiPicker').classList.remove('open');
+  document.getElementById('gifPicker').classList.remove('open');
+}
+
+document.addEventListener('click', e => {
+  const ep = document.getElementById('emojiPicker');
+  const gp = document.getElementById('gifPicker');
+  if (ep.classList.contains('open') && !ep.contains(e.target) && !e.target.closest('.input-icon-btn')) ep.classList.remove('open');
+  if (gp.classList.contains('open') && !gp.contains(e.target) && !e.target.closest('.input-icon-btn')) gp.classList.remove('open');
 });
 
 /* ════════════════════════════════════════════
@@ -860,8 +1507,7 @@ async function saveSettings() {
 }
 
 async function uploadAvatar(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   const fd = new FormData();
   fd.append('file', file);
   const r = await fetch('/api/account/avatar',{method:'POST',body:fd,credentials:'same-origin'});
@@ -889,14 +1535,6 @@ function updateMyProfile() {
 }
 
 /* ════════════════════════════════════════════
-   CALL (voice only)
-════════════════════════════════════════════ */
-function startCall() {
-  if (!activeContact) return;
-  toast(`📞 Calling ${activeContact.display_name}… (WebRTC coming soon)`, 'success');
-}
-
-/* ════════════════════════════════════════════
    MODALS
 ════════════════════════════════════════════ */
 function openModal(id) {
@@ -906,6 +1544,14 @@ function openModal(id) {
     document.getElementById('newChatSearch').value = '';
     document.getElementById('userSearchResults').innerHTML = '';
     document.getElementById('newChatErr').textContent = '';
+  }
+  if (id === 'createGroupModal') {
+    document.getElementById('groupName').value = '';
+    document.getElementById('groupDesc').value = '';
+    document.getElementById('createGroupErr').textContent = '';
+    selectedGroupLogo = '👥'; groupLogoFileData = null;
+    document.getElementById('groupLogoPreview').textContent = '👥';
+    document.getElementById('groupEmojiPicker').style.display = 'none';
   }
   closeDropdowns();
 }
@@ -950,7 +1596,7 @@ function toast(msg, type='') {
   el.className = `toast ${type}`;
   el.textContent = msg;
   document.body.appendChild(el);
-  _toastT = setTimeout(() => el.remove(), 3000);
+  _toastT = setTimeout(() => el.remove(), 3200);
 }
 
 /* ════════════════════════════════════════════
@@ -960,6 +1606,10 @@ function escHtml(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function toggleRequestsPanel() {
+  switchSideTab('reqs');
+}
+
 /* ════════════════════════════════════════════
    INIT
 ════════════════════════════════════════════ */
@@ -967,6 +1617,9 @@ checkSession();
 document.getElementById('loginPass').addEventListener('keydown',  e => { if(e.key==='Enter') doLogin(); });
 document.getElementById('regPass').addEventListener('keydown',    e => { if(e.key==='Enter') doRegister(); });
 document.getElementById('newChatSearch').addEventListener('keydown', e => { if(e.key==='Escape') closeModal('newChatModal'); });
+
+// Init emoji categories
+buildEmojiCats();
 </script>
 </body>
 </html>
