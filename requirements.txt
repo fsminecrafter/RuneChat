@@ -1,0 +1,5 @@
+Authlib
+Flask
+Flask-Bcrypt
+Flask-SocketIO
+Flask-SQLAlchemy
